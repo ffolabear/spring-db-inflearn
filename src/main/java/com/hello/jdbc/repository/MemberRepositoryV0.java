@@ -88,6 +88,28 @@ public class MemberRepositoryV0 {
     }
 
 
+    public void delete(String memberId) throws SQLException {
+        String sql = "DELETE FROM member WHERE member_id = ?";
+
+        Connection con = null;
+        PreparedStatement psmt = null;
+
+        try {
+            con = getConnection();
+            psmt = con.prepareStatement(sql);
+            psmt.setString(1, memberId);
+            psmt.executeUpdate();
+        } catch (SQLException e) {
+            log.error("db error", e.getMessage());
+            throw e;
+        } finally {
+            //여기서 exception 이 생기면 connection 은 종료되지 않음
+            close(con, psmt, null);
+        }
+
+    }
+
+
     private void close(Connection con, Statement stmt, ResultSet rs) {
         //ResultSet 은 결과조회할 때 사용
         if (rs != null) {
