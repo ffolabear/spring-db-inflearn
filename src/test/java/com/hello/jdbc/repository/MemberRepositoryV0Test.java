@@ -1,5 +1,6 @@
 package com.hello.jdbc.repository;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.hello.jdbc.domain.Member;
@@ -15,15 +16,21 @@ class MemberRepositoryV0Test {
 
     @Test
     void crud() throws SQLException {
+
         //save
-        Member member = new Member("memberV4", 10000);
+        Member member = new Member("memberV6", 10000);
         repository.save(member);
 
         //findById
         Member findMember = repository.findById(member.getMemberId());
         log.info("findMember={}", findMember);
         log.info("member != findMember={}", member.equals(findMember));
-        Assertions.assertThat(findMember).isEqualTo(member);
+        assertThat(findMember).isEqualTo(member);
+
+        //update money 10000 -> 20000
+        repository.update(member.getMemberId(), 20000);
+        Member updatedMember = repository.findById(member.getMemberId());
+        assertThat(updatedMember.getMoney()).isEqualTo(20000);
     }
 
 }
