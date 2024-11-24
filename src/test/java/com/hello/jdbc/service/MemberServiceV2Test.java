@@ -80,7 +80,7 @@ class MemberServiceV2Test {
                 () -> memberService.accountTransfer(memberA.getMemberId(), memberB.getMemberId(), 2000))
                 .isInstanceOf(IllegalStateException.class);
 
-        //then
+        //then-
         Member findMemberA = memberRepository.findById(memberA.getMemberId());
         Member findMemberB = memberRepository.findById(memberB.getMemberId());
 

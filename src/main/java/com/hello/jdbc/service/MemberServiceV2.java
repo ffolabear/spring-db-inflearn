@@ -42,9 +42,9 @@ public class MemberServiceV2 {
         Member fromMember = memberRepository.findById(con, fromId);
         Member toMember = memberRepository.findById(con, toId);
 
-        memberRepository.update(fromId, fromMember.getMoney() - money);
+        memberRepository.update(con, fromId, fromMember.getMoney() - money);
         validation(toMember);
-        memberRepository.update(toId, fromMember.getMoney() + money);
+        memberRepository.update(con, toId, fromMember.getMoney() + money);
     }
 
     private static void release(Connection con) {
@@ -58,6 +58,7 @@ public class MemberServiceV2 {
     }
 
     private static void validation(Member toMember) {
+        log.info("toMember: {}", toMember.getMemberId());
         if (toMember.getMemberId().equals("ex")) {
             throw new IllegalStateException("이체중 예외 발생");
         }
