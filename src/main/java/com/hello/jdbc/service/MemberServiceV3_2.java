@@ -48,16 +48,6 @@ public class MemberServiceV3_2 {
         memberRepository.update(toId, fromMember.getMoney() + money);
     }
 
-    private static void release(Connection con) {
-        try {
-            //위에서 오토 커밋 바꾼것 되돌리기
-            con.setAutoCommit(true);
-            con.close();
-        } catch (Exception e) {
-            log.info("error", e);
-        }
-    }
-
     private static void validation(Member toMember) {
         log.info("toMember: {}", toMember.getMemberId());
         if (toMember.getMemberId().equals("ex")) {
