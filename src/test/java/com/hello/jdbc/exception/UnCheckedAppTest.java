@@ -7,7 +7,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 @Slf4j
-public class CheckedAppTest {
+public class UnCheckedAppTest {
 
     @Test
     void checked() {
@@ -29,7 +29,7 @@ public class CheckedAppTest {
         Repository repository = new Repository();
         NetworkClient networkClient = new NetworkClient();
 
-        public void logic() {
+        public void logic() throws SQLException, ConnectException {
             repository.call();
             networkClient.call();
         }
@@ -37,7 +37,7 @@ public class CheckedAppTest {
         static class NetworkClient {
 
             public void call() throws ConnectException {
-                throw new RuntimeConnectException("연결 실패");
+                throw new ConnectException("연결 실패");
             }
         }
 
@@ -45,30 +45,8 @@ public class CheckedAppTest {
 
     static class Repository {
 
-        public void call(){
-            try {
-                runSQL();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        public void runSQL() throws SQLException {
+        public void call() throws SQLException {
             throw new SQLException("ex");
-        }
-    }
-
-    static class RuntimeConnectException extends RuntimeException {
-
-        public RuntimeConnectException(String message) {
-            super(message);
-        }
-    }
-
-    static class RuntimeSQLException extends RuntimeException {
-
-        public RuntimeSQLException(Throwable cause) {
-            super(cause);
         }
     }
 }
