@@ -10,9 +10,9 @@ import org.junit.jupiter.api.Test;
 public class UnCheckedAppTest {
 
     @Test
-    void checked() {
+    void unchecked() {
         Controller controller = new Controller();
-        Assertions.assertThatThrownBy(() -> controller.request()).isInstanceOf(Exception.class);
+        Assertions.assertThatThrownBy(() -> controller.request()).isInstanceOf(RuntimeSQLException.class);
     }
 
     static class Controller {
