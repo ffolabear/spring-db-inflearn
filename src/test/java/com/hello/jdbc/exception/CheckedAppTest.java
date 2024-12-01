@@ -3,9 +3,17 @@ package com.hello.jdbc.exception;
 import java.net.ConnectException;
 import java.sql.SQLException;
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 @Slf4j
 public class CheckedAppTest {
+
+    @Test
+    void checked() {
+        Controller controller = new Controller();
+        Assertions.assertThatThrownBy(() -> controller.request()).isInstanceOf(Exception.class);
+    }
 
     static class Controller {
 
@@ -14,29 +22,29 @@ public class CheckedAppTest {
         public void request() throws SQLException, ConnectException {
             service.logic();
         }
+    }
 
-        static class Service {
+    static class Service {
 
-            Repository repository = new Repository();
-            NetworkClient networkClient = new NetworkClient();
+        Repository repository = new Repository();
+        NetworkClient networkClient = new NetworkClient();
 
-            public void logic() throws SQLException, ConnectException {
-                repository.call();
-                networkClient.call();
+        public void logic() throws SQLException, ConnectException {
+            repository.call();
+            networkClient.call();
+        }
+
+        static class NetworkClient {
+
+            public void call() throws ConnectException {
+                throw new ConnectException("연결 실패");
             }
+        }
 
-            static class NetworkClient {
+        static class Repository {
 
-                public void call() throws ConnectException {
-                    throw new ConnectException("연결 실패");
-                }
-            }
-
-            static class Repository {
-
-                public void call() throws SQLException {
-                    throw new SQLException("ex");
-                }
+            public void call() throws SQLException {
+                throw new SQLException("ex");
             }
         }
     }
