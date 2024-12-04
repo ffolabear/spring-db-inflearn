@@ -15,6 +15,16 @@ public class UnCheckedAppTest {
         Assertions.assertThatThrownBy(() -> controller.request()).isInstanceOf(RuntimeSQLException.class);
     }
 
+    @Test
+    void printEx() {
+        Controller controller = new Controller();
+        try {
+            controller.request();
+        } catch (Exception e) {
+            log.info("ex", e);
+        }
+    }
+
     static class Controller {
 
         Service service = new Service();
@@ -49,7 +59,8 @@ public class UnCheckedAppTest {
             try {
                 runSQL();
             } catch (SQLException e) {
-                throw new RuntimeSQLException(e);
+                //기존 예외를 반드시 포함해줘야함
+                throw new RuntimeSQLException();
             }
         }
 
@@ -67,6 +78,9 @@ public class UnCheckedAppTest {
     }
 
     static class RuntimeSQLException extends RuntimeException {
+
+        public RuntimeSQLException() {
+        }
 
         public RuntimeSQLException(Throwable cause) {
             super(cause);
