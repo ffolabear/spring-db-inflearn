@@ -1,4 +1,4 @@
-package com.hello.jdbc.exception;
+package com.hello.jdbc.exception.basic;
 
 import java.net.ConnectException;
 import java.sql.SQLException;
