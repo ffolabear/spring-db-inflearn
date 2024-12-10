@@ -8,6 +8,7 @@ import com.hello.jdbc.repository.MemberRepository;
 import com.hello.jdbc.repository.MemberRepositoryV3;
 import com.hello.jdbc.repository.MemberRepositoryV4_1;
 import com.hello.jdbc.repository.MemberRepositoryV4_2;
+import com.hello.jdbc.repository.MemberRepositoryV5;
 import java.sql.SQLException;
 import javax.sql.DataSource;
 import lombok.extern.slf4j.Slf4j;
@@ -52,7 +53,8 @@ class MemberServiceV4Test {
         @Bean
         MemberRepository memberRepository() {
 //            return new MemberRepositoryV4_1(dataSource);
-            return new MemberRepositoryV4_2(dataSource);
+//            return new MemberRepositoryV4_2(dataSource);
+            return new MemberRepositoryV5(dataSource);
         }
 
         @Bean
